@@ -5,8 +5,8 @@ from optparse import OptionParser
 # Script to submit MC production
 # ---------- Step 1 ----------
 '''
-python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt20_500_TuneCP5_13p6TeV/GEN \
---out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt20_500_TuneCP5_13p6TeV/RAW \
+python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/GEN \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/RAW \
 --maxEvents -1 --queue short --globalTag 126X_mcRun3_2023_forPU65_v1
 '''
 

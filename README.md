@@ -50,8 +50,8 @@ and run a test with:
 
 This part has already been run and the configuration file you need is 'MC_Step1_RAW_QCD_Pt30to500_cfg.py', so you only need to run the submitter.
 
-    python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt20_500_TuneCP5_13p6TeV/GEN \
-    --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt20_500_TuneCP5_13p6TeV/RAW \
+    python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/GEN \
+    --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/RAW \
     --maxEvents -1 --queue short --globalTag 126X_mcRun3_2023_forPU65_v1
 
 - Step 2
@@ -74,8 +74,8 @@ You can use this repository https://github.com/jonamotta/CaloL1CalibrationProduc
 
     cd calol1calibrationproducer/L1NtupleLauncher
 
-    python3 batchSubmitterMC_L1Ntuple.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt20_500_TuneCP5_13p6TeV/RAW \
-    --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt20_500_TuneCP5_13p6TeV/L1Ntuples \
+    python3 batchSubmitterMC_L1Ntuple.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/RAW \
+    --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/L1Ntuples \
     --maxEvents -1 --queue short --globalTag 126X_mcRun3_2023_forPU65_v1 --caloParams caloParams_2022_v0_6_cfi
 
 
