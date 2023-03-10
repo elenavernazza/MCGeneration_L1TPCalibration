@@ -7,7 +7,7 @@ from optparse import OptionParser
 
 '''
 python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/GEN \
---maxEvents 2000 --nJobs 1000 --queue long --globalTag 126X_mcRun3_2023_forPU65_v1
+--maxEvents 2000 --nJobs 500 --queue long --globalTag 126X_mcRun3_2023_forPU65_v1
 '''
 
 if __name__ == "__main__" :
@@ -24,6 +24,7 @@ if __name__ == "__main__" :
     os.system('mkdir -p '+options.out)
 
     for idx in range(options.nJobs):
+    # for idx in range(159, 500):
 
         outJobName  = options.out + '/job_' + str(idx) + '.sh'
         outLogName  = options.out + '/log_' + str(idx) + '.txt'

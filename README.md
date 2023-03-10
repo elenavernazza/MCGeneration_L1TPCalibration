@@ -70,7 +70,15 @@ You can use this repository https://github.com/jonamotta/CaloL1CalibrationProduc
     git clone git@github.com:jonamotta/calol1calibrationproducer.git
     git cms-checkdeps -A -a
 
+Change this file locally `CMSSW_13_0_0_pre2/src/L1Trigger/L1TNtuples/src/L1AnalysisEvent.cc` in order to have the l1Event branch filled:
+- comment from line L39 to L91
+- change `event_.puWeight = 1.;`
+
+Then compile
+
     scram b -j 12
+
+And run:
 
     cd calol1calibrationproducer/L1NtupleLauncher
 
