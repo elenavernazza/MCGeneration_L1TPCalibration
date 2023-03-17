@@ -48,6 +48,9 @@ process.maxEvents = cms.untracked.PSet(
     #output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
+if options.maxEvents >= 1:
+    process.maxEvents.input = cms.untracked.int32(options.maxEvents)
+
 # Input source
 process.source = cms.Source("EmptySource")
 
