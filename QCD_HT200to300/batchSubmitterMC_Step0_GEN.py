@@ -7,7 +7,7 @@ from optparse import OptionParser
 
 '''
 python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_HT200to300_TuneCP5_13p6TeV/GEN \
---maxEvents 100 --nJobs 1 --queue short --globalTag 126X_mcRun3_2023_forPU65_v1
+--maxEvents 100 --nJobs 1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
 '''
 
 if __name__ == "__main__" :
@@ -34,7 +34,7 @@ if __name__ == "__main__" :
         # it's obtained by summing current Y+M+D+H+M+S+job_number
         # now = datetime.now()
         # randseed = int(now.year) + int(now.month) + int(now.day) + int(now.hour) + int(now.minute) + int(now.second) + idx
-        randseed = idx # to be reproducible
+        randseed = idx+1 # to be reproducible
 
         cmsRun = "cmsRun MC_Step0_GEN_HT200to300_cfg.py outputFile=file:"+outRootName
         cmsRun = cmsRun+" maxEvents="+str(options.maxEvents)+" randseed="+str(randseed)+" globalTag="+options.globalTag
