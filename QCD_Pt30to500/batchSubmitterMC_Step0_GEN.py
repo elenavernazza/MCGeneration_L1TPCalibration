@@ -7,7 +7,11 @@ from optparse import OptionParser
 
 '''
 python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/GEN \
---maxEvents 2000 --nJobs 500 --queue long --globalTag 126X_mcRun3_2023_forPU65_v1
+--maxEvents 2000 --nJobs 500 --queue long --globalTag 124X_mcRun3_2022_realistic_postEE_v1
+'''
+'''
+python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/GEN \
+--maxEvents 180 --nJobs 8000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
 '''
 
 if __name__ == "__main__" :
@@ -17,7 +21,7 @@ if __name__ == "__main__" :
     parser.add_option("--maxEvents", dest="maxEvents", type=int,            default=50,                              help="Number of events per job")
     parser.add_option("--nJobs",     dest="nJobs",     type=int,            default=1,                               help="Number of jobs")
     parser.add_option("--queue",     dest="queue",     type=str,            default='short',                         help="long or short queue")
-    parser.add_option("--globalTag", dest="globalTag", type=str,            default='126X_mcRun3_2023_forPU65_v1',   help="Which globalTag to use")
+    parser.add_option("--globalTag", dest="globalTag", type=str,            default='124X_mcRun3_2022_realistic_postEE_v1',   help="Which globalTag to use")
     parser.add_option("--no_exec",   dest="no_exec",   action='store_true', default=False)
     (options, args) = parser.parse_args()
 
