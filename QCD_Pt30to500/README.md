@@ -21,6 +21,6 @@ Select the CMSSW release according to the configuration you want to use. In this
     cd MCGeneration_L1TPCalibration/QCD_Pt30to500
     cmsenv
     python3 batchSubmitterMC_Step0_GEN.py \
-    --start_from <next trigger seed> \
+    --start_from <next consecutive seed> \
     --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_<add where you start from>/GEN \
     --maxEvents 180 --nJobs 6000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
