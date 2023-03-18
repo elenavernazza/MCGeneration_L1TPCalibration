@@ -9,8 +9,8 @@ https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookGenIntro
 Produce the GEN level Ntuples.
 Select the CMSSW release according to the configuration you want to use. In this case 126X.
 
-    cmsrel CMSSW_12_6_0
-    cd CMSSW_12_6_0/src/
+    cmsrel CMSSW_12_4_13
+    cd CMSSW_12_4_13/src/
     cmsenv
 
     git clone git@github.com:cms-sw/genproductions.git genproductions Configuration/GenProduction/
