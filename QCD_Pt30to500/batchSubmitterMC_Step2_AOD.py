@@ -3,22 +3,19 @@ from datetime import datetime
 from optparse import OptionParser
 
 # Script to submit MC production
-# ---------- Step 1 ----------
+# ---------- Step 2 ----------
 '''
-python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X/GEN \
---out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X/RAW \
---maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 #(DONE) 1381
-python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_6000_6500/GEN \
---out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_6000_6500/RAW \
---maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 #(DONE but all failed)
-python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_7000_10000/GEN \
---out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_7000_10000/RAW \
+python3 batchSubmitterMC_Step2_AOD.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X/RAW \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X/AOD \
+--maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 #(DONE) 443+938=1381
+python3 batchSubmitterMC_Step2_AOD.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_7000_10000/RAW \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_7000_10000/AOD \
 --maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 #(DONE)
-python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_15000_20000/GEN \
---out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_15000_20000/RAW \
+python3 batchSubmitterMC_Step2_AOD.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_15000_20000/RAW \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_15000_20000/AOD \
 --maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
-python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_20000_25000/GEN \
---out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_20000_25000/RAW \
+python3 batchSubmitterMC_Step2_AOD.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_20000_25000/RAW \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_20000_25000/AOD \
 --maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
 '''
 
@@ -50,30 +47,20 @@ if __name__ == "__main__" :
         outLogName  = options.out + '/log_' + str(idx) + '.txt'
         outRootName = options.out + '/Ntuple_' + str(idx) + '.root'
 
-        
         PreviousStepLogName = options.indir + '/log_' + str(idx) + '.txt'
         # check if the previous step has finished
         if len(os.popen('grep "Time report complete in" '+PreviousStepLogName).read()) == 0:
             skipped = skipped + 1
-            print('Skip 1')
-            continue
-        # check if the log file of the previous step has a crash
-        if len(os.popen('grep "A fatal system signal has occurred: segmentation violation" '+PreviousStepLogName).read()) > 0:
-            skipped = skipped + 1
-            print('Skip 2')
+            print('Skip')
             continue
 
         if options.resubmit:
-            # not resubmit the finished jobs
-            if len(os.popen('grep "Time report complete in" '+outLogName).read()) == 0:
-                resubmitting = resubmitting + 1
-            # if os.path.isfile(outRootName):
-            #     if len(os.popen('grep "Run 1, Event 100," '+outLogName).read()) > 0:
-            #         resubmitting = resubmitting + 1
-            #     else:
-            #         continue
-            else:
-                continue
+            if os.path.isfile(outRootName):
+                if len(os.popen('grep "Time report complete in" '+outLogName).read()) == 0:
+                    resubmitting = resubmitting + 1
+                else:
+                    print('Done')
+                    continue
 
         # if the outRootName already exists there is no need of resubmitting
         # but files not correctly closed (ex 99) have to be resubmitted
@@ -99,7 +86,7 @@ if __name__ == "__main__" :
         # randseed = int(now.year) + int(now.month) + int(now.day) + int(now.hour) + int(now.minute) + int(now.second) + idx
         randseed = int(idx)+1 # to be reproducible
 
-        cmsRun = "cmsRun MC_Step1_RAW_RECO_QCD_Pt30to500_cfg.py inputFiles=file:"+inRootName+" outputFile=file:"+outRootName
+        cmsRun = "cmsRun MC_Step2_AOD_QCD_Pt30to500_cfg.py inputFiles=file:"+inRootName+" outputFile=file:"+outRootName
         cmsRun = cmsRun+" maxEvents="+str(options.maxEvents)+" randseed="+str(randseed)+" globalTag="+options.globalTag
         cmsRun = cmsRun+" >& "+outLogName
 
@@ -119,7 +106,7 @@ if __name__ == "__main__" :
         print(command)
         if not options.no_exec: 
             os.system (command)
-            launched = launched + 1
+            launched = launched + 1 
 
     print("skipped = ",skipped)
     print("resubmitting = ",resubmitting)

@@ -17,7 +17,7 @@ python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton
 python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_15000_20000/GEN \
 --maxEvents 100 --nJobs 5000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 --start_from 15000
 python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_20000_25000/GEN \
---maxEvents 100 --nJobs 5000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 --start_from 20000
+--maxEvents 100 --nJobs 5000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 --start_from 20000 #(TO RESUBMIT)
 '''
 
 if __name__ == "__main__" :
