@@ -8,11 +8,16 @@ from optparse import OptionParser
 '''
 python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X/GEN \
 --maxEvents 180 --nJobs 6000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
-python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X/GEN \
---maxEvents 180 --nJobs 6000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 --resubmit
-
 python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_6000_6500/GEN \
 --maxEvents 500 --nJobs 150 --queue long --globalTag 124X_mcRun3_2022_realistic_postEE_v1 --start_from 6000
+python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_7000_10000/GEN \
+--maxEvents 100 --nJobs 3000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 --start_from 7000
+python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_10000_15000/GEN \
+--maxEvents 100 --nJobs 5000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 --start_from 10000
+python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_15000_20000/GEN \
+--maxEvents 100 --nJobs 5000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 --start_from 15000
+python3 batchSubmitterMC_Step0_GEN.py --out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_20000_25000/GEN \
+--maxEvents 100 --nJobs 5000 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1 --start_from 20000
 '''
 
 if __name__ == "__main__" :
