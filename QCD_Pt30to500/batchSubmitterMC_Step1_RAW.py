@@ -5,20 +5,33 @@ from optparse import OptionParser
 # Script to submit MC production
 # ---------- Step 1 ----------
 '''
-python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/GEN \
---out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV/RAW \
---maxEvents -1 --queue short --globalTag 126X_mcRun3_2023_forPU65_v1
+python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X/GEN \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X/RAW \
+--maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
+python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_6000_6500/GEN \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_6000_6500/RAW \
+--maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
+python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_7000_10000/GEN \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_7000_10000/RAW \
+--maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
+python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_15000_20000/GEN \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_15000_20000/RAW \
+--maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
+python3 batchSubmitterMC_Step1_RAW.py --indir /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_20000_25000/GEN \
+--out /data_CMS/cms/motta/CaloL1calibraton/PrivateMC/QCD_Pt30_500_TuneCP5_13p6TeV_124X_20000_25000/RAW \
+--maxEvents -1 --queue short --globalTag 124X_mcRun3_2022_realistic_postEE_v1
 '''
 
 if __name__ == "__main__" :
 
     parser = OptionParser()    
-    parser.add_option("--indir",     dest="indir",     type=str,            default=None,                            help="Input folder name")
-    parser.add_option("--out",       dest="out",       type=str,            default=None,                            help="Output folder name")
-    parser.add_option("--maxEvents", dest="maxEvents", type=int,            default=-1,                              help="Number of events per job")
-    parser.add_option("--queue",     dest="queue",     type=str,            default='short',                         help="long or short queue")
-    parser.add_option("--globalTag", dest="globalTag", type=str,            default='126X_mcRun3_2023_forPU65_v1',   help="Which globalTag to use")
+    parser.add_option("--indir",     dest="indir",     type=str,            default=None,                                       help="Input folder name")
+    parser.add_option("--out",       dest="out",       type=str,            default=None,                                       help="Output folder name")
+    parser.add_option("--maxEvents", dest="maxEvents", type=int,            default=-1,                                         help="Number of events per job")
+    parser.add_option("--queue",     dest="queue",     type=str,            default='short',                                    help="long or short queue")
+    parser.add_option("--globalTag", dest="globalTag", type=str,            default='124X_mcRun3_2022_realistic_postEE_v1',     help="Which globalTag to use")
     parser.add_option("--no_exec",   dest="no_exec",   action='store_true', default=False)
+    parser.add_option("--resubmit",  dest="resubmit",  action='store_true', default=False)
     (options, args) = parser.parse_args()
 
     os.system('mkdir -p '+options.out)
@@ -26,7 +39,7 @@ if __name__ == "__main__" :
     inRootNameList = glob.glob(options.indir+"/Ntuple_*.root")
     inRootNameList.sort()
 
-    skipped = 0
+    # skipped = 0
     resubmitting = 0
 
     for inRootName in inRootNameList:
@@ -35,6 +48,15 @@ if __name__ == "__main__" :
         outJobName  = options.out + '/job_' + str(idx) + '.sh'
         outLogName  = options.out + '/log_' + str(idx) + '.txt'
         outRootName = options.out + '/Ntuple_' + str(idx) + '.root'
+
+        if options.resubmit:
+            if os.path.isfile(outRootName):
+                if len(os.popen('grep "Run 1, Event 100," '+outLogName).read()) > 0:
+                    resubmitting = resubmitting + 1
+                else:
+                    continue
+            else:
+                continue
 
         # if the outRootName already exists there is no need of resubmitting
         # but files not correctly closed (ex 99) have to be resubmitted
@@ -45,24 +67,22 @@ if __name__ == "__main__" :
         #         continue
 
         # some of them were wrongly closed, it's not clear from the log but we notice from the nest step
-        NextStepLogName = options.indir.split('/GEN')[0] + '/L1Ntuples' + '/log_' + str(idx) + '.txt'
-        # print(NextStepLogName)
-        if os.path.isfile(NextStepLogName):
-            if len(os.popen('grep "FileOpenError" '+NextStepLogName).read()) > 0:
-                print('resubmitting')
-                resubmitting = resubmitting + 1
-            else:
-                continue
-
-        else:
-            continue
+        # NextStepLogName = options.indir.split('/GEN')[0] + '/L1Ntuples' + '/log_' + str(idx) + '.txt'
+        # # print(NextStepLogName)
+        # if os.path.isfile(NextStepLogName):
+        #     if len(os.popen('grep "FileOpenError" '+NextStepLogName).read()) > 0:
+        #         print('resubmitting')
+        #         resubmitting = resubmitting + 1
+        #     else:
+        #         continue
 
         # random seed for MC production should every time we submit a new generation
         # it's obtained by summing current Y+M+D+H+M+S+job_number
-        now = datetime.now()
-        randseed = int(now.year) + int(now.month) + int(now.day) + int(now.hour) + int(now.minute) + int(now.second) + int(idx)
+        # now = datetime.now()
+        # randseed = int(now.year) + int(now.month) + int(now.day) + int(now.hour) + int(now.minute) + int(now.second) + idx
+        randseed = idx+1 # to be reproducible
 
-        cmsRun = "cmsRun MC_Step1_RAW_QCD_Pt30to500_cfg.py inputFiles=file:"+inRootName+" outputFile=file:"+outRootName
+        cmsRun = "cmsRun MC_Step1_RAW_RECO_QCD_Pt30to500_cfg.py inputFiles=file:"+inRootName+" outputFile=file:"+outRootName
         cmsRun = cmsRun+" maxEvents="+str(options.maxEvents)+" randseed="+str(randseed)+" globalTag="+options.globalTag
         cmsRun = cmsRun+" >& "+outLogName
 
@@ -82,5 +102,5 @@ if __name__ == "__main__" :
         print(command)
         if not options.no_exec: os.system (command)
 
-    print("skipped = ",skipped)
+    # print("skipped = ",skipped)
     print("resubmitting = ",resubmitting)
